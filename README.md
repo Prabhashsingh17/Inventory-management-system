@@ -1,43 +1,105 @@
-Inventory Management System (Next.js frontend + Express backend)
+# Inventory Management System (Next.js + Serverless API)
 
-Structure
+A full-stack inventory management application using **Next.js 14** for frontend and **serverless Node.js API routes** for backend.
 
-- `backend/` — Express API (SQLite)
-- `frontend/` — Next.js UI
+## Features
 
-Local run
+✅ Add inventory items  
+✅ View all items with quantities  
+✅ Delete items  
+✅ Real-time sync with SWR  
+✅ JSON-based persistence  
+✅ Fully serverless (Vercel-ready)  
 
-PowerShell commands:
+## Project Structure
+
+```
+inventory-system/
+├── frontend/
+│   ├── pages/
+│   │   ├── index.js          # Main inventory UI
+│   │   ├── api/inventory.js  # Backend API (serverless)
+│   │   └── _app.js           # App wrapper
+│   ├── styles.css            # Global styles
+│   ├── next.config.js
+│   └── package.json
+├── backend/                  # (Legacy - converted to serverless)
+├── README.md                 # This file
+└── .gitignore
+```
+
+## Local Development
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Run Locally
 
 ```powershell
-# backend
-cd "c:\Users\Lenovo\OneDrive\Desktop\java script\inventory-system\backend"
-npm install
-npm run dev
-
-# in a separate terminal: frontend
 cd "c:\Users\Lenovo\OneDrive\Desktop\java script\inventory-system\frontend"
 npm install
 npm run dev
 ```
 
-The frontend expects the backend at `NEXT_PUBLIC_API_URL` (defaults to `http://localhost:4000`).
+Open http://localhost:3000 in your browser.
 
-Deploy
+## 🚀 Deploy to Vercel (LIVE)
 
-- Frontend: deploy to Vercel (import the repo) — Vercel detects Next.js automatically.
-- Backend: deploy to Render/Railway/Fly using the provided `Dockerfile` or `node index.js` start command.
-
-Push to GitHub
+### Option 1: Vercel CLI (Fastest)
 
 ```powershell
 cd "c:\Users\Lenovo\OneDrive\Desktop\java script\inventory-system"
-git init
-git add .
-git commit -m "Initial inventory system"
-# create repo on GitHub and push
-git remote add origin <your-repo-url>
+
+# Install Vercel CLI (if needed)
+npm install -g vercel
+
+# Login
+vercel login
+
+# Deploy to production
+vercel --prod
+```
+
+✅ Done! You'll get a live URL like: `https://inventory-system-xxx.vercel.app`
+
+### Option 2: GitHub + Vercel Dashboard
+
+1. **Push to GitHub**:
+```powershell
+cd "c:\Users\Lenovo\OneDrive\Desktop\java script\inventory-system"
+git remote add origin https://github.com/<your-username>/<your-repo>.git
 git push -u origin main
 ```
 
-If you want, I can prepare the git commit here and help deploy (you'll need to authenticate for GitHub/Vercel/Render interactively).
+2. **Import to Vercel**:
+- Go to https://vercel.com/new
+- Select your repository
+- Click "Deploy"
+
+## API Routes
+
+All endpoints at `/api/inventory`:
+
+| Method | Endpoint | Payload | Response |
+|--------|----------|---------|----------|
+| GET | `/api/inventory` | — | `[{id, name, quantity}, ...]` |
+| POST | `/api/inventory` | `{name, quantity}` | `{id, name, quantity}` |
+| DELETE | `/api/inventory?id=1` | — | 204 No Content |
+
+## Build & Production
+
+```powershell
+npm run build
+npm start
+```
+
+## File References
+
+- **[frontend/pages/index.js](frontend/pages/index.js)** — React UI
+- **[frontend/pages/api/inventory.js](frontend/pages/api/inventory.js)** — API handler
+- **[frontend/styles.css](frontend/styles.css)** — Styles
+
+---
+
+**Ready to deploy! Run `vercel --prod` now.** 🎉
