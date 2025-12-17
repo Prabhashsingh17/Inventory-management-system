@@ -1,0 +1,12 @@
+# Ignore backend folder (not needed for Vercel deployment)
+backend/
+# Ignore Git files
+.git
+.gitignore
+# Ignore documentation
+*.md
+# Ignore node_modules at root
+node_modules/
+# Ignore lock files at root (Vercel generates its own)
+package-lock.json
+yarn.lock
