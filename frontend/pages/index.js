@@ -4,14 +4,13 @@ import useSWR from 'swr';
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Home() {
-  const api = process.env.NEXT_PUBLIC_API_URL + '/api/inventory';
-  const { data: items, mutate } = useSWR(api, fetcher, { fallbackData: [] });
+  const { data: items, mutate } = useSWR('/api/inventory', fetcher, { fallbackData: [] });
   const [name, setName] = useState('');
   const [qty, setQty] = useState(1);
 
   async function add(e) {
     e.preventDefault();
-    const res = await fetch(api, {
+    const res = await fetch('/api/inventory', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, quantity: Number(qty) })
@@ -24,7 +23,7 @@ export default function Home() {
   }
 
   async function remove(id) {
-    await fetch(`${api}/${id}`, { method: 'DELETE' });
+    await fetch(`/api/inventory?id=${id}`, { method: 'DELETE' });
     await mutate();
   }
 
